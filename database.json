@@ -1,0 +1,7 @@
+{
+    "host": "signature-bed.cocbj10ea2af.ap-northeast-2.rds.amazonaws.com",
+    "user": "admin",
+    "password":"q1w2e3r4t5",
+    "port":"3306",
+    "database":"board"
+}
