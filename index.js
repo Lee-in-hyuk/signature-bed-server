@@ -64,6 +64,15 @@ app.post('/create', async(req,res)=>{
     res.send('등록되었습니다.');
 })
 
+// 삭제하기
+// delete from 테이블명 where 컬럼명 = 값
+app.delete('/board/:id', async(req,res)=>{
+    const param = req.params;
+    connection.query(`delete from board where no = ${param.id}`,(err, rows, fields)=>{
+        res.send(rows);
+    })
+})
+
 // 셋팅한 app을 실행
 app.listen(port, ()=>{
     console.log('시그니처베드 서버가 돌아가고 있습니다.')
