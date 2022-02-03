@@ -26,10 +26,6 @@ app.use(cors());        // 브라우저의 다양한 사용을 위해 설정
 // app.get('/board', async(req,res)=>{
 //     res.send('상품정보 리스트 입니다.')
 // })
-// post요청 오면 res.send를 보내주겠다.
-app.post('/createboard', async(req,res)=>{
-    res.send('등록되었습니다.')
-})
 
 app.get('/board', async(req,res)=>{
     // php할 때 result = mysqli_query()날려주는거랑 같은 개념
@@ -41,6 +37,18 @@ app.get('/board', async(req,res)=>{
         }
     )
     // 여기까지 작성하고 http://localhost:8080/board 브라우저에 입력했을 때 데이터 잘 나오면 성공
+})
+
+// post요청 오면 res.send를 보내주겠다.
+app.post('/create', async(req,res)=>{
+    const { title, description, enrolldate } = req.body;
+    console.log(req.body);
+    connection.query('insert into board(title, description, date) values(?,?,?);',
+    [title, description, enrolldate],
+    function(err, result, fields){
+        console.log(result);
+    })
+    res.send('등록되었습니다.');
 })
 
 // 셋팅한 app을 실행
