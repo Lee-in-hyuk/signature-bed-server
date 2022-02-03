@@ -51,6 +51,16 @@ app.get('/board/:id', async(req,res)=>{
     )
 })
 
+app.get('/edit/:id', async(req,res)=>{
+    const param = req.params;
+    connection.query(
+        `SELECT * FROM board where no=${param.id}`,
+        (err, rows, fields) =>{
+            res.send(rows);
+        }
+    )
+})
+
 // post요청 오면 res.send를 보내주겠다.
 // post전송 - 테이블에 항목을 추가
 app.post('/create', async(req,res)=>{
@@ -62,6 +72,19 @@ app.post('/create', async(req,res)=>{
         console.log(result);
     })
     res.send('등록되었습니다.');
+})
+
+// 수정하기
+// update 테이블명 set 컬럼1 = 값1,컬럼2 = 값2... where 컬럼명 = 값;
+app.put('/edit/:id', async(req,res)=>{
+    const param = req.params;
+    const { title, description, date } = req.body; 
+    connection.query(`update board set title=?, description=?, date=? where no=${param.id}`,
+    [title, description, date],
+    function(err, rows, fields){
+        console.log(rows);
+    })
+    res.send('수정되었습니다.');
 })
 
 // 삭제하기
