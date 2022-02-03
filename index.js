@@ -39,12 +39,25 @@ app.get('/board', async(req,res)=>{
     // 여기까지 작성하고 http://localhost:8080/board 브라우저에 입력했을 때 데이터 잘 나오면 성공
 })
 
+// 해당 게시글 조회
+app.get('/board/:id', async(req,res)=>{
+    const param = req.params;
+    // console.log(param);
+    connection.query(
+        `SELECT * FROM board where no=${param.id}`,
+        (err, rows, fields) =>{
+            res.send(rows);
+        }
+    )
+})
+
 // post요청 오면 res.send를 보내주겠다.
+// post전송 - 테이블에 항목을 추가
 app.post('/create', async(req,res)=>{
-    const { title, description, enrolldate } = req.body;
+    const { title, description, date } = req.body;
     console.log(req.body);
     connection.query('insert into board(title, description, date) values(?,?,?);',
-    [title, description, enrolldate],
+    [title, description, date],
     function(err, result, fields){
         console.log(result);
     })
